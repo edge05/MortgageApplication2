@@ -1,0 +1,12 @@
+<project name="MortgageApplication2" default="main" basedir=".">
+    
+	<!-- Project Directories -->
+    <property name="main-class" value="com.zos.java.Example.HelloWorld"></property>
+
+    <!-- System defaults -->
+    <property name="zJenkins.conf.dir" value="/usr/lpp/tools/zJenkins/conf"></property>
+	
+	<!--- include AppBuild.xml  -->
+	<import file="${zJenkins.conf.dir}/AppBuild.xml" />
+	
+</project>
