@@ -1,9 +1,6 @@
-package com.wsfg.zos.cobol.Example
-
-import com.wsfg.zos.groovy.utilities.ZosAppBuild
+import com.zos.groovy.utilities.ZosAppBuild
 import com.ibm.dbb.build.BuildProperties
-import com.wsfg.zos.java.utilities.*
-
+import com.zos.java.utilities.*
 
 	GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
  	def build = zBuild.execute()
