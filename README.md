@@ -1,5 +1,5 @@
 # MortgageApplication2
-IBM Sample Mortgage Application from DBB using zJenkins
+IBM Sample Mortgage Application from DBB using zJenkins. See https://github.com/ibmdbbdev/Samples/tree/v1.0.1/MortgageApplication/build
 
 Sample application which calls zJenkins to build and deploy, to AppDev only, Mortgage Application
 
