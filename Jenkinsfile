@@ -30,11 +30,6 @@ pipeline {
                 sh 'env' 
             }
         }
-        stage('Clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
 	    stage ('Start') {
 	      steps {
 	        // send to email
@@ -51,6 +46,13 @@ pipeline {
     			checkout([$class: 'GitSCM', branches: [[name: '*/edge05/branch01']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'edge05', url: 'https://github.com/openmainframeproject/polycephaly.git']]])
     		}	 
 		}
+		stage("build") {
+            steps {
+            	def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
+				def build = zBuild.execute()
+ 				def properties = BuildProperties.getInstance()
+            }
+        }
         stage("Test") {
             options {
                 timeout(time: 2, unit: "MINUTES")
