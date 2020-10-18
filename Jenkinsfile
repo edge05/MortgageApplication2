@@ -22,10 +22,8 @@ pipeline {
 		polycephalyJar		= "${env.binDir}/polycephaly.jar"
 		javaClassPath		= "${env.ibmjzos}:${env.dbbcore}"
 		groovyClassPath		= "${env.javaClassPath}:${env.polycephalyJar}"
-		zJenkins.conf.dir   = "/usr/lpp/tools/zJenkins/conf"
 		
-		
- 		def properties = BuildProperties.getInstance()
+ 		properties 			= BuildProperties.getInstance()
 
     }
 
