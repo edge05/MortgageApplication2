@@ -54,13 +54,11 @@ pipeline {
     			checkout([$class: 'GitSCM', branches: [[name: '*/edge05/branch01']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'edge05', url: 'https://github.com/openmainframeproject/polycephaly.git']]])
     		}	 
 		}
-		stage("Build Application") {
-            steps {
-            	zBuild = load 'ZosAppBuild'
-            	zBuild.execute()
-            }
-        }
-
+		stage("Print system env") {
+	        steps {
+	            println System.getProperty("java.ext.dirs")
+	        }
+		}
         stage("Test") {
             options {
                 timeout(time: 2, unit: "MINUTES")
