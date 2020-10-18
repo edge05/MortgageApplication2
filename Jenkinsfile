@@ -56,8 +56,8 @@ pipeline {
 		}
 		stage("Build Application") {
             steps {
-            	def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
-             	def build = zBuild.execute()
+            	zBuild = load 'ZosAppBuild'
+            	zBuild.execute()
             }
         }
 
