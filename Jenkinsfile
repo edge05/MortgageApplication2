@@ -1,3 +1,4 @@
+@Library('Polycephaly')_
 pipeline {
     agent { node { label 'zOS' } }
 
@@ -22,6 +23,7 @@ pipeline {
 		polycephalyJar		= "${env.binDir}/polycephaly.jar"
 		javaClassPath		= "${env.ibmjzos}:${env.dbbcore}"
 		groovyClassPath		= "${env.javaClassPath}:${env.polycephalyJar}"
+		library 
     }
 
     stages {
