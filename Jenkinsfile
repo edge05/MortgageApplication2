@@ -22,6 +22,10 @@ pipeline {
 		polycephalyJar		= "${env.binDir}/polycephaly.jar"
 		javaClassPath		= "${env.ibmjzos}:${env.dbbcore}"
 		groovyClassPath		= "${env.javaClassPath}:${env.polycephalyJar}"
+		zJenkins.conf.dir   = "/usr/lpp/tools/zJenkins/conf"
+		
+		
+ 		def properties = BuildProperties.getInstance()
 
     }
 
@@ -52,7 +56,12 @@ pipeline {
     			checkout([$class: 'GitSCM', branches: [[name: '*/edge05/branch01']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'edge05', url: 'https://github.com/openmainframeproject/polycephaly.git']]])
     		}	 
 		}
-
+		stage("Build Application") {
+            steps {
+            	def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
+             	def build = zBuild.execute()
+            }
+        }
 
         stage("Test") {
             options {
