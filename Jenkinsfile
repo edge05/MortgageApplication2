@@ -22,9 +22,6 @@ pipeline {
 		polycephalyJar		= "${env.binDir}/polycephaly.jar"
 		javaClassPath		= "${env.ibmjzos}:${env.dbbcore}"
 		groovyClassPath		= "${env.javaClassPath}:${env.polycephalyJar}"
-		
- 		properties 			= BuildProperties.getInstance()
-
     }
 
     stages {
