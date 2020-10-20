@@ -6,7 +6,6 @@ pipeline {
     }
     
     environment {	
-    	
     	binDir				= 'bin'
     	classesDir			= 'classes'	
 		srcJavaZosFile		= 'src/main/java/com/jenkins/zos/file'
