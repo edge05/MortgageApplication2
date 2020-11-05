@@ -48,11 +48,14 @@ pipeline {
     			checkout([$class: 'GitSCM', branches: [[name: '*/edge05/branch01']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'edge05', url: 'https://github.com/openmainframeproject/polycephaly.git']]])
     		}	 
 		}
-		stage("build") {
+        stage("Build") {
+            options {
+                timeout(time: 2, unit: "MINUTES")
+            }
             steps {
-            	def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
-				def build = zBuild.execute()
- 				def properties = BuildProperties.getInstance()
+            	sh "export DBB_HOME=/opt/lpp/IBM/dbb"
+            	sh "export export DBB_CONF=${env.polyRuntime}/conf/"
+                sh "${env.groovyzHome}/groovyz $WORKSPACE/build/build.groovy --collection MortgageApplication --sourceDir $WORKSPACE/conf/package.txt"
             }
         }
         stage("Test") {
