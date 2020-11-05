@@ -37,15 +37,15 @@ pipeline {
 	        // send to email
 	        emailext (
 	            subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-	            body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-	              <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+	            body: """STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'>
+	              Check console output at;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]""",
 	            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
 	          )
 	        }
 	    }
     	stage("CheckOut")  {
     		steps {
-    			checkout([$class: 'GitSCM', branches: [[name: '*/edge05/branch01']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'edge05', url: 'https://github.com/openmainframeproject/polycephaly.git']]])
+    			checkout scm
     		}	 
 		}
         stage("Build") {
@@ -78,19 +78,19 @@ pipeline {
 	post {
 	    success {
 	      emailext (
-	          subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-	          body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-	            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-	          recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+          		attachLog: true, attachmentsPattern: '*.log',
+          		subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+    			body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+     			recipientProviders: [developers(), requestor()],
 	        )
 	    }
 	
 	    failure {
-	      emailext (
-	          subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-	          body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-	            <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-	          recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+	          emailext (
+	          	attachLog: true, attachmentsPattern: '*.log',
+    			body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+     			recipientProviders: [developers(), requestor()],
+     			subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
 	        )
 	    }
     }
