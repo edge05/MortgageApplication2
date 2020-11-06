@@ -3,7 +3,8 @@ import com.ibm.dbb.build.*
 import com.zos.java.utilities.*
 
 
-	def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
+	//def GroovyObject zBuild = (GroovyObject) ZosAppBuild.newInstance()
+	def zBuild = new ZosAppBuild()
 	// parse command line arguments and load build properties
 	def usage = "build.groovy [options] buildfile"
  	def build = zBuild.execute(args, usage)
