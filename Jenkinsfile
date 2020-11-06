@@ -14,7 +14,7 @@ pipeline {
         ibmjzosJar			= '/usr/lpp/java/J8.0_64/lib/ext/ibmjzos.jar'
         DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
-        polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBcoreJar}:${env.DBBhtmlJar}"
+        polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
 
     }
 
