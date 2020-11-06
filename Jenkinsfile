@@ -9,7 +9,13 @@ pipeline {
 		groovyzHome			= '/opt/lpp/IBM/dbb/bin'
 		DBB_HOME			= '/opt/lpp/IBM/dbb'
         DBB_CONF			= '/u/jerrye/conf'
-		
+        DBBLib				= '/opt/lpp/IBM/dbb/lib/*'
+        ibmjzosJar			= '/usr/lpp/java/J8.0_64/lib/ext/ibmjzos.jar'
+        DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
+        DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
+        polyJarFile			= '/u/jerrye/lib/polycephaly.jar'
+        polyClassPath		= '.:${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBcoreJar}:${env.DBBhtmlJar}'
+
     }
 
     stages {
@@ -36,7 +42,7 @@ pipeline {
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
-                sh "${env.groovyzHome}/groovyz $WORKSPACE/build/build.groovy --collection MortgageApplication --sourceDir $WORKSPACE/conf/package.txt"
+                sh "${env.groovyzHome}/groovyz $WORKSPACE/build/build.groovy --classpath ${env.polyClassPath} --collection MortgageApplication --sourceDir $WORKSPACE/conf/package.txt"
             }
         }
         stage("Test") {
