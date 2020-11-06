@@ -5,33 +5,12 @@ pipeline {
         timestamps()
     }
     
-    environment {	
-    	binDir				= 'bin'
-    	classesDir			= 'classes'	
-		srcJavaZosFile		= 'src/main/java/com/jenkins/zos/file'
-		srcJavaZosUtil		= 'src/main/java/com/zos/java/utilities'
-		srcZosResbiuld		= 'src/main/zOS/com.zos.resbuild'
-		srcGroovyZosLang	= 'src/main/groovy/com/zos/language'
-		srcGrovoyZosUtil	= 'src/main/groovy/com/zos/groovy/utilities'
-		srcGroovyCICSutil	= 'src/main/groovy/com/zos/cics/groovy/utilities'
-		javaHome			= '/usr/lpp/java/J8.0_64/bin'
-		groovyHome			= '/u/jerrye/jenkins/groovy/bin'
-		ibmjzos				= '/usr/lpp/java/J8.0_64/lib/ext/ibmjzos.jar'
-		dbbcore				= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
-		polycephalyJar		= "${env.binDir}/polycephaly.jar"
-		javaClassPath		= "${env.ibmjzos}:${env.dbbcore}"
-		groovyClassPath		= "${env.javaClassPath}:${env.polycephalyJar}"
-		libraries {
-    		lib('pipeline-library-demo')
- 		}
+    environment {
+    	groovyzHome			= '/opt/lpp/IBM/dbb/bin'	
+		polyRuntime			= '/u/jerrye'
     }
 
     stages {
-    	stage('Test using variables') {
-            steps {
-                sh 'env' 
-            }
-        }
 	    stage ('Start') {
 	      steps {
 	        // send to email
@@ -48,13 +27,13 @@ pipeline {
     			checkout scm
     		}	 
 		}
-        stage("Build") {
+		stage("Build") {
             options {
                 timeout(time: 2, unit: "MINUTES")
             }
             steps {
             	sh "export DBB_HOME=/opt/lpp/IBM/dbb"
-            	sh "export export DBB_CONF=${env.polyRuntime}/conf/"
+            	sh "export export DBB_CONF=$WORKSPACE/conf"
                 sh "${env.groovyzHome}/groovyz $WORKSPACE/build/build.groovy --collection MortgageApplication --sourceDir $WORKSPACE/conf/package.txt"
             }
         }
