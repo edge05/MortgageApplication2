@@ -13,6 +13,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="GROOVY_SUPPORT"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/polycephaly"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
