@@ -36,9 +36,6 @@ pipeline {
     		}	 
 		}
 		stage("Build") {
-            options {
-                timeout(time: 2, unit: "MINUTES")
-            }
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
