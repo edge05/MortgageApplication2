@@ -1,4 +1,5 @@
-       PROCESS NODYNAM,CODEPAGE(1140),NSYMBOL(NATIONAL)
+       PROCESS NODYNAM
+      *PROCESS NODYNAM,CODEPAGE(1140),NSYMBOL(NATIONAL)
        PROCESS ARITH(EXTEND),OPT,CICS
       *          *********************************************
       *    ************************RD/z**7.5************************
