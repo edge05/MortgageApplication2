@@ -19,6 +19,11 @@ pipeline {
     }
 
     stages {
+        stage('Clean workspace') {
+            steps {
+                cleanWs()
+            }
+        }
 	    stage ('Start') {
 	      steps {
 	        // send to email
