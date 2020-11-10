@@ -1,15 +1,10 @@
 pipeline {
     agent { node { label 'zOS' } }
 
-    options {
-        timestamps()
-    }
     parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        booleanParam(name: 'polyClean', defaultValue: false, description: 'If true, DBB collection will be deleted')
+        booleanParam(name: 'projectClean', defaultValue: false, description: 'If true, the project workspace will be deleted')
+        booleanParam(name: 'projectDelete', defaultValue: false, description: 'If true, the project z/OS datasets will be deleted')
     }
 
     environment {
@@ -22,12 +17,14 @@ pipeline {
         DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
-        polyClean			= "false"
 
     }
 
     stages {
         stage('Clean workspace') {
+        	when {
+                projectClean
+            }
             steps {
                 cleanWs()
             }
