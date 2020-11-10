@@ -3,8 +3,6 @@ com/ibm/bms/App1/epsmort.bms
 com/ibm/cobol/App1/epsmlist.cbl
 com/ibm/cobol/App1/epsmpmt.cbl
 com/ibm/cobol/App1/epsnbrvl.cbl
-com/ibm/cobol/App1/epscsmrd.cbl
-com/ibm/cobol/App1/epscmort.cbl
 com/ibm/copybook/epsmortf.cpy
 com/ibm/copybook/epsmtcom.cpy
 com/ibm/copybook/epsmtinp.cpy
