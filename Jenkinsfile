@@ -1,12 +1,6 @@
 pipeline {
     agent { node { label 'zOS' } }
 
-    parameters {
-        booleanParam(name: 'polyClean', defaultValue: false, description: 'If true, DBB collection will be deleted')
-        booleanParam(name: 'projectClean', defaultValue: false, description: 'If true, the project workspace will be deleted')
-        booleanParam(name: 'projectDelete', defaultValue: false, description: 'If true, the project z/OS datasets will be deleted')
-    }
-
     environment {
 		groovyzHome			= '/opt/lpp/IBM/dbb/bin'
 		DBB_HOME			= '/opt/lpp/IBM/dbb'
@@ -22,9 +16,6 @@ pipeline {
 
     stages {
         stage('Clean workspace') {
-        	when {
-                projectClean
-            }
             steps {
                 cleanWs()
             }
