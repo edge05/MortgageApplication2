@@ -18,7 +18,7 @@ pipeline {
     }
 
     stages {
-        stage('Clean workspace conditional') {
+        stage('Clean workspace') {
             when {
             	expression {
                 	env.projectClean.toBoolean()
@@ -29,7 +29,7 @@ pipeline {
                 cleanWs()
             }
         }
-        stage('Clean workspace conditional') {
+        stage('DBB clean collection') {
             when {
             	expression {
                 	env.DBBClean.toBoolean()
