@@ -13,7 +13,7 @@ pipeline {
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
         DBBClean			= 'false'.toBoolean()
         projectClean		= 'false'.toBoolean()
-        projectDelete		= 'true'.toBoolean()
+        projectDelete		= 'true'
 
     }
 
@@ -26,7 +26,7 @@ pipeline {
         stage('Clean workspace conditional') {
             when {
             	expression {
-                	env.projectClean
+                	env.projectClean.toBoolean()
            		}
         	}
             steps {
