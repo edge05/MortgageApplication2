@@ -25,9 +25,10 @@ pipeline {
         }
         stage('Clean workspace conditional') {
             when {
-    			expression {env.projectClean}
+    			expression {"$env.projectClean"}
     		}
             steps {
+            	sh 'printf "running conditional clean of workspace"'
                 cleanWs()
             }
         }
