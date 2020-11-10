@@ -4,8 +4,15 @@ pipeline {
     options {
         timestamps()
     }
-    
-    environment {	
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    }
+
+    environment {
 		groovyzHome			= '/opt/lpp/IBM/dbb/bin'
 		DBB_HOME			= '/opt/lpp/IBM/dbb'
         DBB_CONF			= '/u/jerrye/conf'
@@ -15,6 +22,7 @@ pipeline {
         DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
+        polyClean			= "false"
 
     }
 
@@ -38,13 +46,13 @@ pipeline {
     	stage("CheckOut")  {
     		steps {
     			checkout scm
-    		}	 
+    		}
 		}
 		stage("Build") {
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
- 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --collection MortgageApplication"           
+ 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --collection MortgageApplication"
             }
         }
         stage("Test") {
@@ -73,7 +81,7 @@ pipeline {
      			recipientProviders: [developers(), requestor()],
 	        )
 	    }
-	
+
 	    failure {
 	          emailext (
 	          	attachLog: true, attachmentsPattern: '*.log',
@@ -84,4 +92,3 @@ pipeline {
 	    }
     }
 }
-  
