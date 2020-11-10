@@ -39,7 +39,7 @@ pipeline {
             	sh 'printf "running DBB delete collection"'
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
- 				//sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} --clean --collection MortgageApplication"
+ 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --clean --collection MortgageApplication"
             }
         }
 	    stage ('Start') {
