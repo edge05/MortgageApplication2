@@ -12,7 +12,7 @@ pipeline {
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
         DBBClean			= 'false'
-        projectClean		= 'true'
+        projectClean		= 'false'
         projectDelete		= 'true'
 
     }
