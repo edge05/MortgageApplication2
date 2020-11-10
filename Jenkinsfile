@@ -11,18 +11,13 @@ pipeline {
         DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
-        DBBClean			= 'false'.toBoolean()
-        projectClean		= 'false'.toBoolean()
+        projectClean		= 'true'
+        DBBClean			= 'true'
         projectDelete		= 'true'
 
     }
 
     stages {
-        stage('Clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
         stage('Clean workspace conditional') {
             when {
             	expression {
@@ -32,6 +27,19 @@ pipeline {
             steps {
             	sh 'printf "running conditional clean of workspace"'
                 cleanWs()
+            }
+        }
+        stage('Clean workspace conditional') {
+            when {
+            	expression {
+                	env.DBBClean.toBoolean()
+           		}
+        	}
+            steps {
+            	sh 'printf "running DBB delete collection"'
+            	sh "export DBB_HOME=${env.DBB_HOME}"
+            	sh "export DBB_CONF=${env.DBB_CONF}"
+ 				//sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} --clean --collection MortgageApplication"
             }
         }
 	    stage ('Start') {
