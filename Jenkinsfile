@@ -18,6 +18,17 @@ pipeline {
     }
 
     stages {
+	    stage ('Start') {
+	      steps {
+	        // send to email
+	        emailext (
+	            subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+	            body: """STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'>
+	              Check console output at;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]""",
+	            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+	          )
+	        }
+	    }
         stage('Clean workspace') {
             when {
             	expression {
@@ -29,6 +40,11 @@ pipeline {
                 cleanWs()
             }
         }
+    	stage("CheckOut")  {
+    		steps {
+    			checkout scm
+    		}
+		}
         stage('DBB clean collection') {
             when {
             	expression {
@@ -42,22 +58,6 @@ pipeline {
             	sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --clean --collection MortgageApplication"
             }
         }
-	    stage ('Start') {
-	      steps {
-	        // send to email
-	        emailext (
-	            subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-	            body: """STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'>
-	              Check console output at;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]""",
-	            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-	          )
-	        }
-	    }
-    	stage("CheckOut")  {
-    		steps {
-    			checkout scm
-    		}
-		}
 		stage("Build") {
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
