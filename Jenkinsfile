@@ -62,7 +62,7 @@ pipeline {
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
- 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --collection MortgageApplication"
+ 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --debug --collection MortgageApplication"
             }
         }
         stage("Test") {
