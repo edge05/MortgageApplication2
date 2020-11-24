@@ -1,1 +1,1 @@
-com/ibm/*
+com/ibm/cobol/*

@@ -11,6 +11,7 @@ pipeline {
         DBBcoreJar			= '/opt/lpp/IBM/dbb/lib/dbb.core_1.0.6.jar'
         DBBhtmlJar			= '/opt/lpp/IBM/dbb/lib/dbb.html_1.0.6.jar'
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
+        CollectionName		= 'MortgageApplication'
         projectClean		= 'true'
         DBBClean			= 'false'
         projectDelete		= 'false'
@@ -55,14 +56,14 @@ pipeline {
             	sh 'printf "running DBB delete collection"'
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
-            	sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --clean --collection MortgageApplication"
+            	sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --clean --collection ${env.CollectionName}"
             }
         }
 		stage("Build") {
             steps {
             	sh "export DBB_HOME=${env.DBB_HOME}"
             	sh "export DBB_CONF=${env.DBB_CONF}"
- 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --debug --collection MortgageApplication"
+ 				sh "${env.groovyzHome}/groovyz --classpath .:${env.polyClassPath} $WORKSPACE/build/build.groovy --debug --collection ${env.CollectionName}"
             }
         }
         stage("Test") {
