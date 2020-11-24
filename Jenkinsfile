@@ -13,7 +13,7 @@ pipeline {
         polyClassPath		= "${env.polyJarFile}:${env.ibmjzosJar}:${env.DBBLib}"
         CollectionName		= 'MortgageApplication'
         projectClean		= 'true'
-        DBBClean			= 'false'
+        DBBClean			= 'true'
         projectDelete		= 'false'
 
     }
